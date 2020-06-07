@@ -1,0 +1,28 @@
+public class InvseeCommand implements CommandExecutor {
+
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] strings) {
+        if (sender instanceof Player){
+            if (sender.hasPermission("Invsee.command")){
+                if (strings.length == 1){
+
+                    String name = strings[0];
+                    Player target = Bukkit.getPlayer(name);
+                    Player player = (Player) sender;
+
+                    player.openInventory(target.getInventory());
+                    sender.sendMessage(ChatColor.GREEN + "You are now watching the inventory of " + ChatColor.RED + target.getName());
+
+                    return true;
+                }else
+                    sender.sendMessage(ChatColor.YELLOW +  "/Invsee <Player>");
+            }else
+                sender.sendMessage(ChatColor.RED + "You are not allowed to execute that command!");
+        }else
+            sender.sendMessage(ChatColor.RED + "You must be a player!");
+
+
+        return true;
+    }
+}
